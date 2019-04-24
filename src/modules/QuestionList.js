@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export class QuestionList extends Component {
   render() {
     let list = [];
     let questions = this.props.questions;
 
-    if(!questions === null){
+    if(questions.length > 0){
         questions.forEach(question => {
             list.push(
                 <li>

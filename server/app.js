@@ -5,6 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 /***** CONFIG *****/
 const app = express();
@@ -39,16 +40,15 @@ app.use((req, res, next) => {
 app.use(bodyParser.json()); 
 
 /****** DATA SCHEMA ******/
-const questionSchema = mongoose.Schema({
+const questionSchema = new Schema({
     questionerName: String,
     title: String,
     question: String,
     answers: [{ type: Schema.Types.ObjectId, ref: 'Answer'}]
 })
 
-const answerSchema = mongoose.Schema({
+const answerSchema = new Schema({
     responderName: String,
-    title: String,
     answer: String,
     ranking: Number,
     question: {type: Schema.Types.ObjectId, ref: 'Question'}
@@ -60,20 +60,59 @@ const Answer = mongoose.model('Answer', answerSchema);
 /****** ROUTES ******/
 //GET
 app.get('/api/questions', (req, res) => {
-    Question.find({}, (err, question) => {
+    Question.find({})
+    .populate('answers')
+    .exec((err, questions) => {
         if(err) return console.error(err);
-        res.json(question);
+        res.json(questions);
     })
 })
-app.get('/api/questions/:id', (req, res) => {
-    Question.find({ _id: req.params.id }, (err, question) => {
+
+
+//POST
+app.post('/api/questions', (req, res) => {
+    let newQuestion = new Question({
+        questionerName: req.body.questionerName,
+        title: req.body.title,
+        question: req.body.question,
+        answers: req.body.answers
+    });
+    newQuestion.save((err, question) => {
         if(err) return console.error(err);
+        console.log(question);
+    });
+    Question.find({}, (err, questions) => {
+        if(err) return console.error(err);
+        res.json(questions);
+    })
+})
+app.post('/api/answer', (req, res) => {
+    let newAnswer = new Answer({
+        responderName: req.body.responderName,
+        answer: req.body.answer,
+        ranking: req.body.ranking,
+        question: req.body.question
+    });
+    newAnswer.save((err, answer) => {
+        if(err) return console.error(err);
+        console.log(answer);
+        res.json(answer);
+    });
+})
+
+//PUT
+app.put('/api/questions/:id', (req, res) => {
+    Question.findOne({ _id: req.params.id }, (err, question) => {
+        if(err) return console.error(err);
+        question.answers = req.body.answers;
+        question.save((err, question) => {
+            if(err) return console.error(err);
+            console.log(question);
+        });
         res.json(question);
     })
 })
 
-//POST
-//PUT
 //DELETE
 
 /****** LISTEN ******/
