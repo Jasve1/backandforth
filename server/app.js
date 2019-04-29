@@ -130,7 +130,10 @@ app.put('/api/answer/:id', (req, res) => {
     })
 })
 
-//DELETE
+/**** Reroute all unknown requests to the React index.html ****/
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+  });
 
 /****** LISTEN ******/
 app.listen(port, () => console.log(`API running on port ${port}!`));
