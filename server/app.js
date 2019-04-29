@@ -10,8 +10,10 @@ const Schema = mongoose.Schema;
 /***** CONFIG *****/
 const app = express();
 const port = (process.env.PORT || 8080);
-app.use(express.static(path.join(__dirname, '../build')));
+const root = require('path').join(__dirname, '..', 'build')
+app.use('/Jasve1/backandforth/', express.static(root));
 app.use(morgan('combined'));
+app.use(bodyParser.json()); 
 
 /***** DATABASE SETUP ******/
 mongoose.connect(process.env.DB_STRING, {useNewUrlParser: true});
@@ -37,7 +39,7 @@ app.use((req, res, next) => {
         next();
     }
 });
-app.use(bodyParser.json()); 
+
 
 /****** DATA SCHEMA ******/
 const questionSchema = new Schema({
@@ -131,9 +133,17 @@ app.put('/api/answer/:id', (req, res) => {
 })
 
 /**** Reroute all unknown requests to the React index.html ****/
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../build/index.html'));
+app.get('*', (req, res) => {
+    if (req.method === 'GET' && req.accepts('html') && !req.is('json') && !req.path.includes('.')) {
+        res.sendFile('index.html', { root })
+    } else next()
   });
+
+/**** Error ****/
+app.use(function (err, req, res, next) {
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
+})
 
 /****** LISTEN ******/
 app.listen(port, () => console.log(`API running on port ${port}!`));
