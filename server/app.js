@@ -10,8 +10,7 @@ const Schema = mongoose.Schema;
 /***** CONFIG *****/
 const app = express();
 const port = (process.env.PORT || 8080);
-const root = require('path').join(__dirname, '..', 'build')
-app.use('/Jasve1/backandforth/', express.static(root));
+app.use(express.static(path.join(__dirname, '../build')));
 app.use(morgan('combined'));
 app.use(bodyParser.json()); 
 
