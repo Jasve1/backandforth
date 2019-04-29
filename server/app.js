@@ -50,7 +50,10 @@ const questionSchema = new Schema({
 const answerSchema = new Schema({
     responderName: String,
     answer: String,
-    ranking: Number,
+    ranking: {
+        votes: Number,
+        liked: Number
+    },
     question: {type: Schema.Types.ObjectId, ref: 'Question'}
 })
 
@@ -93,6 +96,7 @@ app.post('/api/answer', (req, res) => {
         ranking: req.body.ranking,
         question: req.body.question
     });
+    console.log(req.body);
     newAnswer.save((err, answer) => {
         if(err) return console.error(err);
         console.log(answer);
@@ -104,12 +108,25 @@ app.post('/api/answer', (req, res) => {
 app.put('/api/questions/:id', (req, res) => {
     Question.findOne({ _id: req.params.id }, (err, question) => {
         if(err) return console.error(err);
-        question.answers = req.body.answers;
+        question.answers.push(req.body.answers);
         question.save((err, question) => {
             if(err) return console.error(err);
             console.log(question);
         });
         res.json(question);
+    })
+})
+
+app.put('/api/answer/:id', (req, res) => {
+    Answer.findOne({ _id: req.params.id }, (err, answer) => {
+        if(err) return console.error(err);
+        answer.ranking.votes += 1;
+        answer.ranking.liked += req.body.liked;
+        answer.save((err, answer) => {
+            if(err) return console.error(err);
+            console.log(answer);
+        })
+        res.json(answer);
     })
 })
 

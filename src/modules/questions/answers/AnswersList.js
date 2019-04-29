@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import Answer from './Answer';
+
 export class AnswersList extends Component {
   render() {
     let list = [];
@@ -8,15 +10,12 @@ export class AnswersList extends Component {
     if(answers.length > 0){
         answers.forEach(answer => {
             list.push(
-                <li>
-                  <h3>{answer.responderName}'s answer:</h3>
-                  <p>{answer.answer}</p>
-                </li>
+                <Answer answer={answer} rateAnswer={this.props.rateAnswer}/>
             )
         });
 
         return (
-            <div>
+            <div id="answers">
                 <ul>
                     {list}
                 </ul>

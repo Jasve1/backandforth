@@ -9,14 +9,22 @@ export class QuestionList extends Component {
     if(questions.length > 0){
         questions.forEach(question => {
             list.push(
-                <li>
-                    <Link to={`question/${question._id}`}>{question.title}</Link>
-                </li>
+                <Link to={`question/${question._id}`}>
+                    <li>
+                        <h3>
+                            {question.title}
+                        </h3>
+                        <p>{question.question}</p>
+                    </li>
+                </Link>
             )
         });
 
         return (
-            <div>
+            <div className="questions">
+                <header>
+                    <h2>Questions:</h2>
+                </header>
                 <ul>
                     {list}
                 </ul>
@@ -24,7 +32,9 @@ export class QuestionList extends Component {
         )
     }else{
         return(
-            <p>There are currently no questions to anwer</p>
+            <div className="questions">
+              <p>There are currently no questions to anwer</p>  
+            </div>
         )
     }
   }

@@ -25,14 +25,13 @@ export class AddQuestion extends Component {
 
   render() {
     return (
-      <div>
-        <h2>Submit your question</h2>
+      <div id="add-question" className="add">
         <form onSubmit={this.handleSubmit}>
           <input type="text" name="questionerName" placeholder="Your name"/>
           <input type="text" name="title" placeholder="Question title"/>
           <textarea type="text" name="question" placeholder="Your question"/>
           <button type="submit">
-            Ask your question
+            <h2>Ask your question</h2>
           </button>
         </form>
       </div>
