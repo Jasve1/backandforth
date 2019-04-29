@@ -133,10 +133,8 @@ app.put('/api/answer/:id', (req, res) => {
 })
 
 /**** Reroute all unknown requests to the React index.html ****/
-app.get('*', (req, res) => {
-    if (req.method === 'GET' && req.accepts('html') && !req.is('json') && !req.path.includes('.')) {
-        res.sendFile('index.html', { root })
-    } else next()
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'));
   });
 
 /**** Error ****/
