@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   getQuestions(){
-    fetch('http://localhost:8080/api/questions')
+    fetch('/api/questions')
     .then(response => response.json())
     .then(json => {
       this.setState({questions: json, isLoading: false});
@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   submitQuestion(questionerName, title, question){
-    fetch('http://localhost:8080/api/questions', {
+    fetch('/api/questions', {
       method: 'post',
       body: JSON.stringify({
         questionerName: questionerName,
@@ -58,7 +58,7 @@ class App extends Component {
     })
   }
   addAnswerToQuestion(questionId, answerId){
-    fetch(`http://localhost:8080/api/questions/${questionId}`, {
+    fetch(`/api/questions/${questionId}`, {
       method: 'put',
       body: JSON.stringify({
         answers: {_id: answerId}
@@ -76,7 +76,7 @@ class App extends Component {
 
   submitAnswer(responderName, answer, questionId) {
     return new Promise((res, rej) => {
-      fetch('http://localhost:8080/api/answer', {
+      fetch('/api/answer', {
         method: 'post',
         body: JSON.stringify({
           responderName: responderName,
@@ -99,7 +99,7 @@ class App extends Component {
     })
   }
   rateAnswer(liked, answerId){
-    fetch(`http://localhost:8080/api/answer/${answerId}`, {
+    fetch(`/api/answer/${answerId}`, {
       method: 'put',
       body: JSON.stringify({
         liked: parseInt(liked) 
