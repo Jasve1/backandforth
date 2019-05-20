@@ -2,3 +2,5 @@ os: windows
 
 language: node_js
 
+rvm:
+  - 10.15.1
