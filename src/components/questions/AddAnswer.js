@@ -9,6 +9,7 @@ export class AddAnswer extends Component {
 
   handleAnswerSubmit(e){
     e.preventDefault();
+    
     const answer = {};
     e.target.childNodes.forEach((elm) => {
       if(elm.value){

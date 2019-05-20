@@ -88,8 +88,8 @@ app.post('/api/questions', (req, res) => {
     Question.find({}, (err, questions) => {
         if(err) return console.error(err);
         res.json(questions);
-    })
-})
+    });
+});
 app.post('/api/answer', (req, res) => {
     let newAnswer = new Answer({
         responderName: req.body.responderName,
@@ -134,7 +134,7 @@ app.put('/api/answer/:id', (req, res) => {
 /**** Reroute all unknown requests to the React index.html ****/
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build/index.html'));
-  });
+});
 
 /**** Error ****/
 app.use(function (err, req, res, next) {

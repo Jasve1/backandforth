@@ -8,6 +8,8 @@ export class AddQuestion extends Component {
   }
 
   handleSubmit(e){
+    e.preventDefault();
+    
     const question = {};
     e.target.childNodes.forEach((elm) => {
       if(elm.value){
