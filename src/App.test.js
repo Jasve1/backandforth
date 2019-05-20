@@ -5,7 +5,12 @@ import App from './App';
 
 afterEach(cleanup);
 
-it('renders app withe header text', () => {
+it('isLoading', () => {
     const {getByText} = render(<App/>)
     expect(getByText('Questions loading...')).toBeInTheDocument();
-})
+});
+
+it('form headline', () => {
+    const {getByText} = render(<App/>)
+    expect(getByText('Ask your question')).toBeInTheDocument();
+});
