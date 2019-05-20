@@ -8,6 +8,6 @@ rvm:
 deploy:
   provider: heroku
   api_key:
-    secure: 6d4595e8-fe6c-4b91-9163-706b412efc76
+    secure: "SECURE API"
   app: back-and-forth
 
