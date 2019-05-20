@@ -32,5 +32,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest-dom": "^3.2.2",
+    "react-testing-library": "^7.0.1"
+  }
 }

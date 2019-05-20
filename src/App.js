@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import QuestionList from './modules/QuestionList';
-import AddQuestion from './modules/AddQuestion';
-import Question from './modules/questions/Question';
+import QuestionList from './components/QuestionList';
+import AddQuestion from './components/AddQuestion';
+import Question from './components/questions/Question';
 
 class App extends Component {
 
@@ -144,7 +144,7 @@ class App extends Component {
                     <div>
                       <AddQuestion {...props} submitQuestion={this.submitQuestion}/> 
                       {
-                        this.state.isLoading ? <div>Qusetions loading...</div> :
+                        this.state.isLoading ? <div>Questions loading...</div> :
                           <QuestionList {...props} questions={this.state.questions}/>
                       } 
                     </div>

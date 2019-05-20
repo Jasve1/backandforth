@@ -4,3 +4,10 @@ language: node_js
 
 rvm:
   - 10.15.1
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: 6d4595e8-fe6c-4b91-9163-706b412efc76
+  app: back-and-forth
+
